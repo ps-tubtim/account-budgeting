@@ -9,7 +9,7 @@ class AccountMoveLine(models.Model):
     def uncommit_expense_budget(self):
         """For vendor bill in valid state, do uncommit for related expense."""
         Expense = self.env["hr.expense"]
-        for ml in self:
+        for ml in self.filtered(lambda l: not l.move_id.not_affect_budget):
             inv_state = ml.move_id.state
             move_type = ml.move_id.move_type
             if move_type in ("entry"):
