@@ -111,6 +111,7 @@
                                 >
                                     <field name="adjust_type" />
                                     <field name="product_id" optional="hide" />
+                                    <field name="name" optional="show" />
                                     <field name="account_id" optional="show" />
                                     <field name="analytic_account_id" />
                                     <field
@@ -126,7 +127,8 @@
                                     <field
                                         name="analytic_tag_ids"
                                         widget="many2many_tags"
-                                        optional="hide"
+                                        optional="show"
+                                        groups="analytic.group_analytic_tags"
                                     />
                                     <field name="amount" />
                                     <field name="amount_commit" optional="hide" />
@@ -136,6 +138,7 @@
                                         <group>
                                             <field name="adjust_type" />
                                             <field name="product_id" />
+                                            <field name="name" />
                                             <field name="account_id" />
                                         </group>
                                         <group>
@@ -143,13 +146,10 @@
                                             <field
                                                 name="analytic_tag_ids"
                                                 widget="many2many_tags"
-                                                optional="hide"
+                                                groups="analytic.group_analytic_tags"
                                             />
                                             <field name="amount" />
-                                            <field
-                                                name="amount_commit"
-                                                optional="hide"
-                                            />
+                                            <field name="amount_commit" />
                                         </group>
                                     </group>
                                 </form>
