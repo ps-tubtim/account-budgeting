@@ -13,13 +13,17 @@ class HRExpenseSheet(models.Model):
     )
 
     def write(self, vals):
-        """ Clearing for its Advance """
+        """ Clearing for its Advance and Cancel payment expense """
+        doc_cancel = self.filtered(lambda l: l.state == "cancel")
         res = super().write(vals)
         if vals.get("state") in ("approve", "cancel"):
             # If this is a clearing, return commit to the advance
             advances = self.mapped("advance_sheet_id.expense_line_ids")
             if advances:
                 advances.recompute_budget_move()
+        # Support with module `hr_expense_cancel` if you change state cancel to post
+        if vals.get("state") == "post" and doc_cancel:
+            doc_cancel.mapped("expense_line_ids").recompute_budget_move()
         return res
 
 
